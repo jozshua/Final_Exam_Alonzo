@@ -1,0 +1,35 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: Installation of Nagios (Ubuntu)
+    apt:
+      name:
+        - nagios4
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Installation of Nagios (CentOS)
+    dnf:
+      name:
+        - nagios
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: Banner motd (Ubuntu)
+    debug:
+      msg: "Ansible Managed by Alonzo"
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Banner motd (CentOS)
+    debug:
+      msg: "Ansible Managed by Alonzo"
+    when: ansible_distribution == "CentOS"
